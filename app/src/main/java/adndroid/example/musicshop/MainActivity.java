@@ -3,6 +3,7 @@ package adndroid.example.musicshop;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -42,19 +43,20 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     void createMap () {
+
         goodsMap = new HashMap();
-        goodsMap.put("Guitar 1",100.0);
-        goodsMap.put("Guitar 2",300.0);
-        goodsMap.put("Guitar 3",400.0);
+        goodsMap.put("HSS Electric Guitar - Indian Laurel",100.0);
+        goodsMap.put("Ibanez RG421 MOL Electric Guitars",300.0);
+        goodsMap.put("Cort X100 6-String Electric Guitar",400.0);
     }
     void createSpinner (){
         spinner = findViewById(R.id.spinner);
         spinner.setOnItemSelectedListener(this);
         spinnerArrayList = new ArrayList();
 
-        spinnerArrayList.add(0,"Guitar 1");
-        spinnerArrayList.add(1,"Guitar 2");
-        spinnerArrayList.add(2,"Guitar 3");
+        spinnerArrayList.add(0,"HSS Electric Guitar - Indian Laurel");
+        spinnerArrayList.add(1,"Ibanez RG421 MOL Electric Guitars");
+        spinnerArrayList.add(2,"Cort X100 6-String Electric Guitar");
 
         spinnerAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, spinnerArrayList);
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
@@ -87,13 +89,13 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     priceTextView.setText(" " + quantity * price);
         ImageView goodItemImageView = findViewById(R.id.goodItemImageView);
         switch (goodsName) {
-        case "Guitar 1":
+        case "HSS Electric Guitar - Indian Laurel":
             goodItemImageView.setImageResource(R.drawable.guitars);
                     break;
-            case "Guitar 2":
+            case "Ibanez RG421 MOL Electric Guitars":
                 goodItemImageView.setImageResource(R.drawable.guitar_2);
                 break;
-            case "Guitar 3":
+            case "Cort X100 6-String Electric Guitar":
                 goodItemImageView.setImageResource(R.drawable.guitar_3);
                 break;
                 default:
@@ -113,7 +115,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         order.quantity = quantity;
         order.orderprice = quantity * price;
 
-        Log.d("Quantity", Integer.toString(order.quantity));
+
+     //  Log.d("Quantity", Integer.toString(order.quantity));
 
         Intent orderIntent = new Intent(MainActivity.this, OrderActivity.class);
         orderIntent.putExtra("userNameForIntent", order.userName);
@@ -121,6 +124,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         orderIntent.putExtra("QuantityForIntent", Integer.toString(order.quantity));
         orderIntent.putExtra("orderPriceForIntent", Double.toString(order.orderprice));
         startActivity(orderIntent);
+
     }
 
 }
