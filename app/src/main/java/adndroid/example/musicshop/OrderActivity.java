@@ -14,6 +14,7 @@ public class OrderActivity extends AppCompatActivity {
     String[] addresses = {"iparafin@gmail.com"};
     String subject = "Order From Music Shop";
     String emailText;
+    Uri attachment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +39,13 @@ public class OrderActivity extends AppCompatActivity {
         TextView priceOrderTextView = findViewById(R.id.priceOrderTextView);
         priceOrderTextView.setText("Order Price: " +orederprice+ "$");
 
-        emailText = "Customer Name: "+ userName+ "\n" + goodsName + "\n" + "Quantity: "+ quantity +"peace" + "\n" + "Order Price: " + orederprice + "$";
+
+
+        emailText = "Customer Name: "+ userName+ "\n" + goodsName + "\n" + "Quantity: "+ quantity +" piece"  + "\n" + "Order Price: " + orederprice + "$";
+        if (quantity != "1" ) {
+            emailText = "Customer Name: "+ userName+ "\n" + goodsName + "\n" + "Quantity: "+ quantity +" pieces"  + "\n" + "Order Price: " + orederprice + "$";
+        }
+
 
         ImageView goodItemImageView = findViewById(R.id.goodItemImageView);
         switch (goodsName) {
@@ -58,13 +65,14 @@ public class OrderActivity extends AppCompatActivity {
 
     }
 
-    public void submitOrder(View view) {
+        public void submitOrder(View view) {
 
-        Intent intent = new Intent(Intent.ACTION_SENDTO);
-            intent.setData(Uri.parse("mailto:")); // only email apps should handle this
+            Intent intent = new Intent(Intent.ACTION_SEND);
+            intent.setType("*/*"); // this type for all apps
             intent.putExtra(Intent.EXTRA_EMAIL, addresses);
             intent.putExtra(Intent.EXTRA_SUBJECT, subject);
             intent.putExtra(Intent.EXTRA_TEXT, emailText);
+
             if (intent.resolveActivity(getPackageManager()) != null) {
                 startActivity(intent);
             }
